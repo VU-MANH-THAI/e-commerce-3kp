@@ -13,4 +13,6 @@ public interface EncryptService {
     public ResponseEntity<AcqToMer> sendAcqToMer(String signature, String certM, String dataVerify);
     public ResponseEntity<MerToCus> sendMerToCus(String signature);
     public ResponseEntity<Cus> notifyCustomer(String signature, String dataVerify);
+
+    Transaction getTransactionId(Integer id);
 }

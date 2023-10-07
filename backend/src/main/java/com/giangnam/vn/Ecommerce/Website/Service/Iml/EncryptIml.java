@@ -414,6 +414,19 @@ public class EncryptIml implements EncryptService {
         }
     }
 
+    @Override
+    public Transaction getTransactionId(Integer shoppingCartId){
+        Optional<Shopping_Cart> shoppingCartOptional = shoppingCartRepository.findById(shoppingCartId);
+        if (!shoppingCartOptional.isPresent()) {
+            return null;
+        }
+        Transaction transaction = new Transaction();
+        transaction.setTransactionIdMerchant(shoppingCartOptional.get().getTransactionIdMerchant());
+        transaction.setTransactionIdCustomer(shoppingCartOptional.get().getTransactionIdCustomer());
+        transaction.setOrderId(shoppingCartOptional.get().getShop_Order().getId());
+        return transaction;
+    }
+
 
     public static boolean isValidSlip(SLIP slip) {
         if (slip.getCreditCardNumber().length() != 16) {

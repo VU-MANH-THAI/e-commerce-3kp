@@ -13,16 +13,25 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/encrypt")
+
 public class EncryptController {
     @Autowired
     EncryptService encryptService;
 
     @PostMapping("/new-transaction")
+    @CrossOrigin
     public ResponseEntity<?> addNewTransaction(@RequestParam Integer id) {
         return new ResponseEntity<>(encryptService.addNewTransactionId(id), HttpStatus.OK);
     }
 
+    @GetMapping("/new-transaction")
+    @CrossOrigin
+    public ResponseEntity<Transaction> get(@RequestParam Integer id) {
+        return new ResponseEntity<>(encryptService.getTransactionId(id), HttpStatus.OK) ;
+    }
+
     @PostMapping("/sendCusToMer")
+    @CrossOrigin
     public ResponseEntity<EncryptCusToMer> sendCusToMer(@RequestBody PaymentRequest paymentRequest) {
         try {
             return encryptService.sendCusToMer(paymentRequest);
@@ -33,6 +42,7 @@ public class EncryptController {
     }
 
     @PostMapping("/sendMerToAcq")
+    @CrossOrigin
     public ResponseEntity<MerToAcq> sendMerToAcq(@RequestBody MerchantToAcquired merchantToAcquired) {
         return encryptService.sendMerToAcq(merchantToAcquired.getSignature(),
                 merchantToAcquired.getCert(),
@@ -40,6 +50,7 @@ public class EncryptController {
     }
 
     @PostMapping("/sendAcqToMer")
+    @CrossOrigin
     public ResponseEntity<AcqToMer> sendAcqToMer(@RequestBody AcquireToMerchant acquireToMerchant) {
         return encryptService.sendAcqToMer( acquireToMerchant.getSignature(),
                                             acquireToMerchant.getCertM(),
@@ -47,11 +58,13 @@ public class EncryptController {
     }
 
     @PostMapping("/sendMerToCus")
+    @CrossOrigin
     public ResponseEntity<MerToCus> sendMerToCus(@RequestBody MerchantToCustomer merchantToCustomer) {
         return encryptService.sendMerToCus(merchantToCustomer.getSignature());
     }
 
     @PostMapping("/customer-notify")
+    @CrossOrigin
     public ResponseEntity<Cus> customerNotify(@RequestBody Customer customer) {
         return encryptService.notifyCustomer(customer.getSignature(), customer.getDataVerify());
     }

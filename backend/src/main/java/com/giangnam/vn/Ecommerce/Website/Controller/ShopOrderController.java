@@ -12,9 +12,9 @@ public class ShopOrderController {
     @Autowired
     ShopOrderService shopOrderService;
 
-    @GetMapping("/getOrder")
+    @GetMapping("/{id}")
     @CrossOrigin
-    public ResponseEntity<ShopOrderDTO> getShop(@RequestParam Integer id) {
+    public ResponseEntity<ShopOrderDTO> getShop(@PathVariable Integer id) {
         return shopOrderService.getOrder(id);
     }
 }
